@@ -1,0 +1,39 @@
+
+;----------------------------string to int conversion--------------------
+
+stoi proc uses  ebx ecx edx   ,input: ptr byte
+LOCAL number:dword
+invoke str_length,input
+mov ecx,0
+mov number,ecx
+mov ecx,eax
+mov esi,input
+
+.while ecx!=0
+
+mov al, [esi] 
+sub al,48d
+push eax
+
+mov bl,10
+mov al,1
+mov edx,1
+.while ecx!=edx
+mul bl
+inc edx
+.endw
+mov bx,ax		;power of ten is in ebx
+pop eax
+
+mul bx
+
+mov ebx,eax
+add number ,ebx
+
+inc esi
+dec ecx
+.endw
+mov eax,number
+ret     
+stoi endp
+;------------------------------------------------------------
