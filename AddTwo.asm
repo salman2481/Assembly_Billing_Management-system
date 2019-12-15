@@ -1,4 +1,3 @@
-
 INCLUDE irvine32.inc
 .data 
 ;--------------------------functions declarations -------------------
@@ -38,6 +37,7 @@ optionEntered dword ?
 Quantity dword 0
 totalBill dword 0
 loopCounter dword 1
+CursorY byte  03
 ;-----------------------------------------------------------------
 
 ;--------------symbols variables-----------
@@ -51,9 +51,10 @@ testt byte 30 dup (?),0
 
 main proc
 
-
-
 ;***************************		Print Menu  ***********************
+mov eax,yellow + (blue * 16)
+call SetTextColor
+
 
 invoke printStr,addr welcomeNote
 call crlf
@@ -73,20 +74,32 @@ invoke printStr,addr singleSpace
 invoke getLine,ecx,addr holder
 invoke substring ,0,comma,addr holder,addr productName
 invoke substring ,comma,dollar,addr holder,addr productPrice
-invoke printStr,addr productName
-invoke printStr,addr tab3
-invoke printStr,addr productPrice
-pop eax
 
+
+
+
+
+invoke printStr,addr productName
+
+mov  dl,40 ;to move right for name its 5 for price its 35
+mov  dh,cursorY  ;to move down     same for both incremented by 1
+call Gotoxy
+invoke printStr,addr productPrice
+
+call crlf
+pop eax
+inc cursorY
 inc ecx
 inc eax
-call crlf
 .endw
 ;**************************************************
 
 ;****************************TAKING OPTIONS****************
 
+call crlf
+
 invoke printStr,addr QntyOfItems
+call crlf
 call readDec
 mov loopCounter,eax
 
@@ -320,4 +333,3 @@ getLine ENDP
 
 
 end main
-
