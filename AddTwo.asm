@@ -1,3 +1,21 @@
+\INCLUDE Irvine32.inc
+.data
+s dword ?
+d dword ?
+char byte "c"
+  string BYTE "Enter age",0
+  msg byte "eligible",0
+  msg2 byte "not eligible",0
+  string2 byte "do u have a bsc degree, enter 1 for yes and 0 for no",0
+.code
+main PROC
+  mov edx,offset string 
+   call WriteString
+   call readint
+   mov s,eax
+   cmp al,22
+   jl L2
+   jg L1
 INCLUDE irvine32.inc
 .data 
 ;--------------------------functions declarations -------------------
